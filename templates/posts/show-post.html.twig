@@ -1,0 +1,159 @@
+{% extends 'base.html.twig' %}
+{% form_theme formPost 'bootstrap_4_layout.html.twig' %}
+
+{% block title %}posts
+{% endblock %}
+
+{% block body %}
+	<style>
+		img {
+			border: 1px solid #ddd;
+			border-radius: 4px;
+			padding: 5px;
+			width: 150px;
+		}
+
+		img:hover {
+			box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
+		}
+	</style>
+
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item active" ><h1>Détail d'un posts</h1></li>
+        </ol><br><br>
+
+		<h2 style="color: orange; text-align: center;" class="card-title">{{ post.Title }}</h2>
+		
+        <div class="card border-secondary mb-3" style="max-width: 90rem; height: auto; text-align: center;">
+            <div class="card-header">{{ post.Timestamp  | date('d/m/y')}}</div>
+            <div class="row">
+                <div class="col-lg-2">
+                    <div class="card border-secondary mb-3" style="max-width: 20rem; height: auto; text-align: center;">
+                        <div class="card-header">Score</div>
+                        <div
+                            class="card-body">
+                            <i  style = "font-size: 70px; padding: 0; margin: 0" class="fa fa-caret-up"></i><br>
+                            <em style="color: darkgreen; font-size: 50px" class="card-title">{{ post.score() }}</em><br>
+                            <i  style = "font-size: 70px" class="	fa fa-caret-down"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-8">
+                    <div class="card-body">
+                        <h4 class="card-title">{{ post.Body }}</h4>
+
+                        <a href="" class="btn btn-primary">SQL</a>
+                        <a href="" class="btn btn-primary">PHP</a>
+                        <a href="" class="btn btn-primary">JAVA</a>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="card border-secondary mb-3" style="max-width: 20rem; max-height: auto; text-align: center;">
+                        <div class="card-header">Autheur</div>
+                        <div class="card-body">
+                            <a target="_blank" href="/assets/avatar.png">
+                                <img src="/assets/avatar.png" alt="avatar" style="width:40px">
+                            </a>
+                            <strong class="card-title">{{ post.User.Pseudo }}</strong><br>
+                            <i style="color: darkgreen;" class="fa fa-angellist"></i>
+                            <em class="card-title">{{ post.User.Reputation }}</em>
+                        </div>
+                    </div>
+                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                    <form>
+                        <button formaction="{{ path('post_edit', {'id': post.id }) }}" class="btn"><i class="material-icons" style="font-size:36px;color:green">border_color</i></button>
+                        <button formaction="{{ path('post_delete', {'id': post.id }) }}" class="btn"><i class="fa fa-trash-o" style="font-size:48px;color:red"></i></button>
+                    </form>
+                </div>
+            </div>
+        </div><br><br>
+
+        <div class="alert alert-dismissible alert-success">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong>{{ post.nbResponses() }} Responses</strong> <br><br>
+        </div>
+
+        {% for response in post.getResponses() %}
+            <div class="card border-secondary mb-3" style="max-width: 90rem; height: auto; text-align: center;">
+                <div class="card-header">{{ response.Timestamp  | date('d/m/y') }}</div>
+                <div class="row">
+                    <div class="col-lg-2">
+                        <div class="card border-secondary mb-3" style="max-width: 20rem; height: auto; text-align: center;">
+                            <div class="card-header">Score</div>
+                            <div
+                                class="card-body">
+                                <i  style = "font-size: 70px; padding: 0; margin: 0" class="fa fa-caret-up"></i><br>
+                                <em style="color: darkgreen; font-size: 50px" class="card-title">{{ response.score() }}</em><br>
+                                <i  style = "font-size: 70px" class="	fa fa-caret-down"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-8">
+                        <div class="card-body">
+                            <h4 class="card-title">{{ response.Body }}</h4>
+
+                            <a href="" class="btn btn-primary">SQL</a>
+                            <a href="" class="btn btn-primary">PHP</a>
+                            <a href="" class="btn btn-primary">JAVA</a>
+                        </div>
+                    </div>
+                    <div class="col-lg-2">
+                        <div class="card border-secondary mb-3" style="max-width: 20rem; max-height: auto; text-align: center;">
+                            <div class="card-header">Autheur</div>
+                            <div class="card-body">
+                                <a target="_blank" href="/assets/avatar.png">
+                                    <img src="/assets/avatar.png" alt="avatar" style="width:40px">
+                                </a>
+                                <strong class="card-title">{{ response.User.Pseudo }}</strong><br>
+                                <i style="color: darkgreen;" class="fa fa-angellist"></i>
+                                <em class="card-title">{{ response.User.Reputation }}</em>
+                            </div>
+                        </div>
+                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                        <form>
+                            <button formaction="{{ path('post_edit', {'id': response.id }) }}" class="btn"><i class="material-icons" style="font-size:36px;color:green">border_color</i></button>
+                            <button formaction="{{ path('post_delete', {'id': response.id }) }}" class="btn"><i class="fa fa-trash-o" style="font-size:48px;color:red"></i></button>
+                        </form>
+                    </div>
+                </div>
+            </div><br><br>
+        {% endfor %}
+        <div class="form-group">
+            {{form_start(formPost)}}
+
+            {{ form_row(formPost.Body) }}
+
+            <button type="submit" class="btn btn-primary">Répondre</button>
+
+            {{ form_end(formPost) }}
+        </div>
+{% endblock %}
+
+{% block simplemde_editor_row %}
+    <div class="form-group">
+        {{ form_label(formPost) }}
+        {{ form_widget(formPost) }}
+        {{ form_errors(formPost) }}
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" id="'+ssId+'" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css" crossorigin="anonymous" />
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" id="'+jsId+'" src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js" crossorigin="anonymous"></script>
+{% endblock %}
+
+{% block simplemde_editor_widget %}
+    {{ block('textarea_widget') }}
+    <script type="text/javascript">
+        $('document').ready(function() {
+            var element = $("#{{ id }}")[0];
+            var config = {{ form.vars.editor_config|raw}};
+            var simplemde_test = new SimpleMDE(Object.assign(config, {'element': element}));
+        });
+    </script>
+{% endblock %}

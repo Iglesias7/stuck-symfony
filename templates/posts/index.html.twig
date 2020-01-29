@@ -1,0 +1,78 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}posts
+{% endblock %}
+
+{% block body %}
+	<style>
+		img {
+			border: 1px solid #ddd;
+			border-radius: 4px;
+			padding: 5px;
+			width: 150px;
+		}
+
+		img:hover {
+			box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
+		}
+	</style>
+
+	<div class="example-wrapper">
+		<h1>Liste des posts</h1><br><br>
+
+		<div class="btn-group btn-group-toggle" data-toggle="buttons">
+			<form>
+				<button formaction="{{ path('posts-newest') }}" class="btn btn-primary active">
+					Newest</button>
+				<button formaction="{{ path('posts-vote') }}" class="btn btn-success active">
+					Vote</button>
+				<button formaction="{{ path('posts-unanswerer') }}" class="btn btn-info active">
+					Unanswerer</button>
+				<button formaction="{{ path('posts-tag') }}" class="btn btn-danger active">
+					Tag</button>
+				<button formaction="{{ path('home') }}" class="btn btn-warning active">
+					Refresh</button>
+			</form>
+		</div><br><br>
+        <a href="{{ path('post_new') }}" class="btn btn-primary">Ask Question</a><br><br>
+		{% for post in posts %}
+			<div class="row">
+				<div class="col-lg-2">
+					<div class="card border-secondary mb-3" style="max-width: 20rem; height: 150px; text-align: center;">
+						<div class="card-header">Score</div>
+						<div class="card-body">
+                            {# <i  style = "color: darkgreen; font-size: 50px; padding: 0; margin: 0" class="fa fa-caret-up"></i><br> #}
+							<em style = "color: darkgreen; font-size: 50px" class="card-title"> {{ post.score() }}</em><br>
+                            {# <i  style = "color: darkgreen; font-size: 50px" class="	fa fa-caret-down"></i> #}
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-8">
+					<div class="card border-secondary mb-3" style="max-width: 90rem; height: 150px; text-align: center;">
+						<div class="card-header">{{ post.Timestamp  | date('d/m/y')}}</div>
+						<div class="card-body">
+                            <a href="{{ path('post', {'id': post.id }) }}"><h4 class="card-title">{{ post.Title }}</h4></a>
+
+                            <a href="" class="btn btn-primary">SQL</a>
+                            <a href="" class="btn btn-primary">PHP</a>
+                            <a href="" class="btn btn-primary">JAVA</a>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-2">
+					<div class="card border-secondary mb-3" style="max-width: 20rem; max-height: 150px; text-align: center;">
+						<div class="card-header">Autheur</div>
+						<div class="card-body">
+							<a target="_blank" href="/assets/avatar.png">
+								<img src="/assets/avatar.png" alt="avatar" style="width:40px">
+							</a>
+							<strong class="card-title">{{ post.User.Pseudo }}</strong><br>
+							<i  style = "color: darkgreen;" class="fa fa-angellist"></i><em class="card-title">{{ post.User.Reputation }}</em>
+						</div>
+					</div>
+				</div>
+			</div>
+		{% endfor %}
+
+	</div>
+{% endblock %}

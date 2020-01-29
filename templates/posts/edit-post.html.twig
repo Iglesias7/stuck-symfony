@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+{% form_theme formPost 'bootstrap_4_layout.html.twig' %}
+
+{% block title %}Ask{% endblock %}
+
+{% block body %}
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item active" ><h1>Ask Question</h1></li>
+        </ol><br><br>
+	        
+        <div class="form-group">
+            {{form_start(formPost)}}
+
+            {{ form_row(formPost.Title) }}
+            {{ form_row(formPost.Body) }}
+
+            <button type="submit" class="btn btn-primary">
+            {% if editMod %}
+                Update Question
+            {% else %}
+                Ask Question
+            {% endif %}
+           
+            </button>
+
+            {{ form_end(formPost) }}
+        </div>
+{% endblock %}
+
+
+

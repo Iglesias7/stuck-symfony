@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+{% form_theme formUser 'bootstrap_4_layout.html.twig' %}
+
+{% block title %}edit/add-user{% endblock %}
+
+{% block body %}
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item active" ><h1>Add User</h1></li>
+        </ol><br><br>
+	        
+        <div class="form-group">
+            {{form_start(formUser)}}
+
+            {{ form_row(formUser.Pseudo) }}
+            {{ form_row(formUser.Password) }}
+            {{ form_row(formUser.LastName) }}
+            {{ form_row(formUser.FirstName) }}
+            {{ form_row(formUser.Email) }}
+            {{ form_row(formUser.BirthDate) }}
+            {{ form_row(formUser.Role) }}
+
+            <button type="submit" class="btn btn-primary">
+            {% if editMod %}
+                Update User
+            {% else %}
+                Add User
+            {% endif %}
+           
+            </button>
+
+            {{ form_end(formUser) }}
+        </div>
+{% endblock %}
+
+
+

@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Users{% endblock %}
+
+{% block body %}
+	<style>
+		img {
+			border: 1px solid #ddd;
+			border-radius: 4px;
+			padding: 5px;
+			width: 150px;
+		}
+
+		img:hover {
+			box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
+		}
+	</style>
+
+	<div class="example-wrapper">
+		<ol class="breadcrumb">
+            <li class="breadcrumb-item active" ><h1>Liste des Utilisateurs de l'aplication</h1></li>
+        </ol><br><br>
+
+        <a href="{{ path('user_new') }}" class="btn btn-primary">Add User</a><br><br>
+
+		<div class = "row">
+		{% for user in users %}
+            <div class="col-lg-2 card border-secondary mb-3" style="max-width: auto; height: auto; text-align: center; margin: 5px">
+                <div class="card-header">{{ user.Pseudo }}</div>
+                <div class="card-body">
+                    <a target="_blank" href="/assets/avatar.png">
+						<img src="/assets/avatar.png" alt="avatar" style="width:70px">
+					</a>
+					<strong class="card-title">{{ user.FirstName }}</strong><br>
+					<strong class="card-title">{{ user.LastName }}</strong><br>
+					<i  style = "color: darkgreen;" class="fa fa-angellist"></i><em class="card-title">{{ user.Reputation }}</em>
+					<form>
+                        <button formaction="{{ path('user_edit', {'id': user.id }) }}" class="btn"><i class="material-icons" style="font-size:16px;color:green">border_color</i></button>
+                        <button formaction="{{ path('user_delete', {'id': user.id }) }}" class="btn"><i class="fa fa-trash-o" style="font-size:22px;color:red"></i></button>
+                    </form>
+                </div>
+            </div>
+		{% endfor %}
+		</div>
+	</div>
+{% endblock %}
